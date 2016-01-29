@@ -77,10 +77,13 @@ Dart EmbeddedMap3::cutEdge(Dart d)
 {
 	Dart nd = Map3::cutEdge(d);
 
-//	if(isOrbitEmbedded<VERTEX>())
-//	{
-//		initOrbitEmbeddingNewCell<VERTEX>(nd) ;
-//	}
+	if(isOrbitEmbedded<VERTEX>())
+	{
+		// embed the new darts created in the cut vertex
+		Algo::Topo::setOrbitEmbedding<VERTEX>(*this, d, getEmbedding<VERTEX>(d)) ;
+		// embed a new cell for the new vertex and copy the attributes' line (c) Lionel
+		Algo::Topo::setOrbitEmbeddingOnNewCell<VERTEX>(*this, nd) ;
+	}
 
 	if(isOrbitEmbedded<EDGE>())
 	{
